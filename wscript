@@ -119,7 +119,6 @@ def test(self):
     if self.bld.has_tool_option('run_tests'):
         self.bld.add_post_fun(exec_test_js)
 
-
 def exec_test_js(bld):
     nodejs = bld.env['NODEJS'][0]
     env = dict(os.environ)
@@ -139,3 +138,9 @@ def exec_test_js(bld):
                 example = os.path.join('examples', f)
                 bld.cmd_and_log(
                     '{0} {1} --dry-run\n'.format(nodejs, example), env=env)
+
+    if os.path.exists('benchmarks'):
+        for f in sorted(os.listdir('benchmarks')):
+            if f.endswith('.js'):
+                benchmark = os.path.join('benchmarks', f)
+                bld.cmd_and_log('{0} {1}\n'.format(nodejs, benchmark), env=env)
