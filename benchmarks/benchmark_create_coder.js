@@ -73,7 +73,7 @@ function decoder_creation_test(test_id, decoder_factory){
     var decoder = decoder_factory.build();
     var end_time = new Date().getTime();
     var test_time = end_time - start_time;
-    decoder_test.push([test_id, start_time, end_time, test_time]);
+    decoder_test.push([test_id, test_time]);
 }
 
 function encoder_creation_test(test_id, encoder_factory){
@@ -81,7 +81,7 @@ function encoder_creation_test(test_id, encoder_factory){
     var encoder = encoder_factory.build();
     var end_time = new Date().getTime();
     var test_time = end_time - start_time;
-    encoder_test.push([test_id, start_time, end_time, test_time]);
+    encoder_test.push([test_id, test_time]);
 }
 
 function decoder_factory_creation_test(test_id){
@@ -89,7 +89,7 @@ function decoder_factory_creation_test(test_id){
     var decoder_factory = new kodo.decoder_factory(symbols, symbol_size);
     var end_time = new Date().getTime();
     var test_time = end_time - start_time;
-    decoder_factory_test.push([test_id, start_time, end_time, test_time]);
+    decoder_factory_test.push([test_id, test_time]);
 }
 
 function encoder_factory_creation_test(test_id){
@@ -97,7 +97,7 @@ function encoder_factory_creation_test(test_id){
     var encoder_factory = new kodo.encoder_factory(symbols, symbol_size);
     var end_time = new Date().getTime();
     var test_time = end_time - start_time;
-    encoder_factory_test.push([test_id, start_time, end_time, test_time]);
+    encoder_factory_test.push([test_id, test_time]);
 }
 
 
@@ -111,47 +111,65 @@ function print_all_tests(){
     print_encoder_factory_tests();
 }
 
+function print_test_average_time(data){
+    console.log("Average test time: " + calculated_average_time(data) + " ms");
+}
+
 function print_decoder_tests(){
-    console.log("Create decoder benchmark")
-    print_header();
+    console.log("Create decoder benchmark");
+    print_symbol_and_symbol_size();
     decoder_test.forEach(function(entry){
         print_test_output(entry);
     });
+    print_test_average_time(decoder_test);
 }
 
 
 function print_decoder_factory_tests(){
-    console.log("Create decoder factory benchmark")
-    print_header();
+    console.log("Create decoder factory benchmark");
+    print_symbol_and_symbol_size();
     decoder_factory_test.forEach(function(entry){
         print_test_output(entry);
     });
+    print_test_average_time(decoder_factory_test);
 }
 
 
 
 function print_encoder_tests(){
-    console.log("Create encoder benchmark")
-    print_header();
+    console.log("Create encoder benchmark");
+    print_symbol_and_symbol_size();
     encoder_test.forEach(function(entry){
         print_test_output(entry);
     });
+    print_test_average_time(encoder_test);
 }
 
 function print_encoder_factory_tests(){
-    console.log("Create encoder factory benchmark")
-    print_header();
+    console.log("Create encoder factory benchmark");
+    print_symbol_and_symbol_size();
     encoder_factory_test.forEach(function(entry){
         print_test_output(entry);
     });
+    print_test_average_time(encoder_factory_test);
 }
 
 
 function print_test_output(data){
-    var res = "  " + data[0] + "      " + data[1] + "      " + data[2] + "                  " +  data[3];
-    console.log(res);
+    console.log("Test id: " + data[0] + " Execution time: " + data[1] + " ms");
 }
 
-function print_header(){
-    console.log("======== TEST ID ======== ==== Start Time ==== ==== End Time ==== ==== Execution Time (MS)  ====")
+
+
+function calculated_average_time(data){
+    var total = 0;
+    data.forEach(function(entry){
+        total = total + entry[1];
+    })
+
+    return total / data.length;
+}
+
+function print_symbol_and_symbol_size(){
+    console.log("Symbols: " + symbols + " Symbol size: " + symbol_size);
 }
