@@ -26,11 +26,11 @@ var encoder_factory_test = [];
 var encode_decode_test = [];
 
 // Setup and execute test
-setup_test(10, 16, 160);
+setup_test(140, 16, 160);
 run_test();
 print_all_tests();
 console.log("\n");
-setup_test(10, 32, 160);
+setup_test(140, 32, 160);
 run_test();
 print_all_tests();
 
