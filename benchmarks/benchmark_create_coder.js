@@ -29,6 +29,10 @@ var encode_decode_test = [];
 setup_test(10, 16, 160);
 run_test();
 print_all_tests();
+console.log("\n");
+setup_test(10, 32, 160);
+run_test();
+print_all_tests();
 
 
 
@@ -189,9 +193,9 @@ function print_test_average_time(data){
 function print_decoder_tests(){
     console.log("Create decoder benchmark");
     print_symbol_and_symbol_size();
-    decoder_test.forEach(function(entry){
-        print_test_output(entry);
-    });
+    // decoder_test.forEach(function(entry){
+    //     print_test_output(entry);
+    // });
     print_test_average_time(decoder_test);
 }
 
@@ -199,9 +203,9 @@ function print_decoder_tests(){
 function print_decoder_factory_tests(){
     console.log("Create decoder factory benchmark");
     print_symbol_and_symbol_size();
-    decoder_factory_test.forEach(function(entry){
-        print_test_output(entry);
-    });
+    // decoder_factory_test.forEach(function(entry){
+    //     print_test_output(entry);
+    // });
     print_test_average_time(decoder_factory_test);
 }
 
@@ -210,27 +214,27 @@ function print_decoder_factory_tests(){
 function print_encoder_tests(){
     console.log("Create encoder benchmark");
     print_symbol_and_symbol_size();
-    encoder_test.forEach(function(entry){
-        print_test_output(entry);
-    });
+    // encoder_test.forEach(function(entry){
+    //     print_test_output(entry);
+    // });
     print_test_average_time(encoder_test);
 }
 
 function print_encoder_factory_tests(){
     console.log("Create encoder factory benchmark");
     print_symbol_and_symbol_size();
-    encoder_factory_test.forEach(function(entry){
-        print_test_output(entry);
-    });
+    // encoder_factory_test.forEach(function(entry){
+    //     print_test_output(entry);
+    // });
     print_test_average_time(encoder_factory_test);
 }
 
 function print_encode_decode_tests(){
-    console.log("Create decode encode benchmark");
+    console.log("Perform decoding and encoding benchmark");
     print_symbol_and_symbol_size();
-    encode_decode_test.forEach(function(entry){
-        print_test_output(entry);
-    });
+    // encode_decode_test.forEach(function(entry){
+    //     print_test_output(entry);
+    // });
     print_test_average_time(encode_decode_test);
 }
 
