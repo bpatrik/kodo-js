@@ -25,13 +25,14 @@ uint32_t decoder_symbols_uncoded(Decoder& decoder)
 }
 
 template<class Decoder>
-std::string decoder_copy_from_symbols(Decoder& decoder)
+emscripten::val decoder_copy_from_symbols(Decoder& decoder)
 {
     std::vector<uint8_t> payload(decoder.block_size());
     auto storage = storage::mutable_storage(
         payload.data(), decoder.block_size());
-    decoder.copy_from_symbols(storage);
-    return std::string(payload.begin(), payload.end());
+	decoder.copy_from_symbols(storage);    
+    return emscripten::val(emscripten::memory_view<uint8_t>(payload.size(), payload.data()));
+
 }
 
 template<class Decoder>

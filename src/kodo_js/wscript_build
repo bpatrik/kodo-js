@@ -5,7 +5,7 @@ bld.program(
     features='cxx',
     source=['kodo.cpp'],
     target='kodo',
-    linkflags=['--bind'],
+    linkflags=['--bind', '-O3'],
     use=['kodo_rlnc_includes'],
     export_includes=['..'])
 

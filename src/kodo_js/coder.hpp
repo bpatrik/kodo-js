@@ -10,11 +10,11 @@
 namespace kodo_js
 {
 template<class Coder>
-std::string coder_write_payload(Coder& coder)
-{
-    std::vector<uint8_t> payload(coder.payload_size());
-    coder.write_payload(payload.data());
-    return std::string(payload.begin(), payload.end());
+emscripten::val coder_write_payload(Coder& coder)
+{	
+   std::vector<uint8_t> payload(coder.payload_size());
+   coder.write_payload(payload.data());    
+   return emscripten::val(emscripten::memory_view<uint8_t>(payload.size(), payload.data()));
 }
 
 template<class Coder>

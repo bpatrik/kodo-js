@@ -26,7 +26,7 @@ the ``python2`` command on your system, just write ``python`` instead)::
 
     git clone git@github.com:steinwurf/kodo-js.git
     cd kodo-js
-    python2 waf configure --cxx_mkspec=cxx_default_emscripten --emscripten_path="path-to-emscripten"
+    python2 waf configure --cxx_mkspec=cxx_default_emscripten --cxx_nodebug --emscripten_path="path-to-emscripten"
 
 For example, *path-to-emscripten* can be: ``~/emsdk-portable/emscripten/1.37.22``
 
