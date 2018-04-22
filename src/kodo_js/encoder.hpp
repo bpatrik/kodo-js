@@ -11,11 +11,31 @@
 
 namespace kodo_js
 {
+
+
+template<class Encoder>
+emscripten::val encoder_write_symbol(Encoder& encoder, const std::string coefficients)
+{	
+   std::vector<uint8_t> payload(encoder.symbol_size());
+   encoder.write_symbol(payload.data(),(uint8_t*) coefficients.c_str());    
+   return emscripten::val(emscripten::typed_memory_view(payload.size(), payload.data()));
+
+}
+
+	
+template<class Encoder>
+emscripten::val encoder_generate(Encoder& encoder)
+{	
+   std::vector<uint8_t> coefficients(encoder.coefficient_vector_size());
+   encoder.generate(coefficients.data());    
+   return emscripten::val(emscripten::typed_memory_view(coefficients.size(), coefficients.data()));
+}
+		
 template<class Encoder>
 void encoder_set_const_symbols(Encoder& encoder, const std::string& data)
 {
     auto storage =
-        storage::const_storage((uint8_t*)data.c_str(), data.length());
+    storage::const_storage((uint8_t*)data.c_str(), data.length());
     encoder.set_const_symbols(storage);
 }
 
@@ -50,6 +70,8 @@ template<class Coder>
 void encoder(const std::string& name)
 {
     coder<Coder>(std::string("encoder") + name)
+    .function("write_symbol", &encoder_write_symbol<Coder>)
+    .function("generate", &encoder_generate<Coder>)
     .function("set_const_symbols", &encoder_set_const_symbols<Coder>)
     .function("set_const_symbol", &encoder_set_const_symbol<Coder>)
     .function("is_systematic_on", &encoder_is_systematic_on<Coder>)

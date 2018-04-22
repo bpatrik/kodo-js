@@ -31,7 +31,7 @@ emscripten::val decoder_copy_from_symbols(Decoder& decoder)
     auto storage = storage::mutable_storage(
         payload.data(), decoder.block_size());
 	decoder.copy_from_symbols(storage);    
-    return emscripten::val(emscripten::memory_view<uint8_t>(payload.size(), payload.data()));
+    return emscripten::val(emscripten::typed_memory_view(payload.size(), payload.data()));
 
 }
 
@@ -48,6 +48,13 @@ void decoder_read_payload(Decoder& decoder, const std::string payload)
 }
 
 template<class Decoder>
+void decoder_read_symbol(Decoder& decoder, const std::string payload, const std::string coefficients)
+{	 
+    decoder.read_symbol((uint8_t*) payload.c_str(),(uint8_t*) coefficients.c_str());
+}
+
+
+template<class Decoder>
 uint32_t decoder_symbols_partially_decoded(Decoder& decoder)
 {
     return decoder.symbols_partially_decoded();
@@ -62,8 +69,8 @@ void decoder(const std::string& name)
     .function("copy_from_symbols", &decoder_copy_from_symbols<Coder>)
     .function("is_symbol_uncoded", &decoder_is_symbol_uncoded<Coder>)
     .function("read_payload", &decoder_read_payload<Coder>)
+    .function("read_symbol", &decoder_read_symbol<Coder>)
     .function("symbols_partially_decoded",
-              &decoder_symbols_partially_decoded<Coder>)
-    ;
+              &decoder_symbols_partially_decoded<Coder>);
 }
 }

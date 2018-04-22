@@ -14,13 +14,19 @@ emscripten::val coder_write_payload(Coder& coder)
 {	
    std::vector<uint8_t> payload(coder.payload_size());
    coder.write_payload(payload.data());    
-   return emscripten::val(emscripten::memory_view<uint8_t>(payload.size(), payload.data()));
+   return emscripten::val(emscripten::typed_memory_view(payload.size(), payload.data()));
 }
+
 
 template<class Coder>
 uint32_t coder_payload_size(Coder& coder)
 {
     return coder.payload_size();
+}
+template<class Coder>
+uint32_t coder_coefficient_vector_size(Coder& coder)
+{
+    return coder.coefficient_vector_size();
 }
 
 template<class Coder>
@@ -65,7 +71,7 @@ auto coder(const std::string& name) -> emscripten::class_<Coder>
         .function("rank", &coder_rank<Coder>)
         .function("block_size", &coder_block_size<Coder>)
         .function("payload_size", &coder_payload_size<Coder>)
-        ;
+        .function("coefficient_vector_size", &coder_coefficient_vector_size<Coder>);
 
     return coder_class;
 }
